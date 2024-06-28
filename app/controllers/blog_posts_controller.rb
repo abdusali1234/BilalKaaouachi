@@ -43,10 +43,10 @@ class BlogPostsController < ApplicationController
     private
 
     def blog_post_params
-        params.require(:blog_post).permit(:title, :body)
+        params.require(:blog_post).permit(:title, :body, :published_at)
     end
 
     def set_blog_post
-        @blog_post = BlogPost.find(params[:id])
+        @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id])
     end
 end
